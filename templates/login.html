@@ -25,5 +25,36 @@
 		<div id="result">
 			
 		</div>
+		<script>
+			function signInCallback(authResult){
+				// if authorResutl contain code then hite sign-in button
+				if (authResult['code']) {
+					// Hide the sign-in button 
+					$('#signinButton').attr('style', 'display: none');
+					// Send the one-time-use code to server, if the server
+					// responds, write a "login succesful" message to the web page
+					// and then redirect back to the main restaurants page
+					$.ajax({
+						type: 'POST',
+						url: '/gconnect?state={{STATE}}',
+						processData: flase,
+						contentType: 'applicaiton/octet-stream; charset=utf-8',
+						data: authResult['code'],
+						success: function(result){
+							if (result){
+								$('#result').html('Login Successful!</br>'+ result + '</br>Redirecting...')
+								setTimeout(function(){
+									window.location.href="/restaurant";
+								}, 4000);
+								}
+							}
+						}
+
+					})
+
+				}
+
+			}
+		</script>
 	</body>
 </html>
