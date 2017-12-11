@@ -10,6 +10,14 @@ import random, string
 
 from oauth2client.client import flow_from_clientsecrets
 from oauth2client.client import FlowExchangeError
+import httplib2
+import json
+from flask import
+import requests
+
+CLIENT_ID = json.loads(
+  open('client_secrets.json', 'r').read())['web']['client_id']
+
 
 
 
