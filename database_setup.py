@@ -14,15 +14,6 @@ class User(Base):
   email = Column(String(250), nullable=False)
   picture = Column(String(250))
 
-  @property
-  def serialize(self):
-    ''' Return object data in easily serializeable format '''
-    return {
-          'id'      : self.id,
-          'name'    : self.name,
-          'email'   : self.email,
-          'picture' : self.picture, 
-    }
 
 class Restaurant(Base):
     __tablename__ = 'restaurant'
@@ -38,7 +29,6 @@ class Restaurant(Base):
        return {
            'name'         : self.name,
            'id'           : self.id,
-           'user_id'      : self.user_id,
        }
  
 class MenuItem(Base):
@@ -65,7 +55,6 @@ class MenuItem(Base):
            'id'                 : self.id,
            'price'              : self.price,
            'course'             : self.course,
-           'user_id'            : self.user_id,
        }
 
 
