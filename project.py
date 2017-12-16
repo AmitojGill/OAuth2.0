@@ -106,6 +106,9 @@ def gconnect():
   login_session['picture'] = data['picture']
   login_session['email'] = data['email']
 
+  if getUserID(login_session['email']) is None:
+    
+
   output = ''
   output += '<h1>Welcome, '
   output += login_session['username']
