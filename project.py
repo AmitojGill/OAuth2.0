@@ -48,7 +48,7 @@ def gconnect():
       # Upgrade the authorization code into a credentials object
       oauth_flow = flow_from_clientsecrets('client_secrets.json', scope= '')
       oauth_flow.redirect_uri = 'postmessage'
-      credentials.access_token = oauth_flow.step2_exchange(code)
+      credentials = oauth_flow.step2_exchange(code)
   except FlowExchangeError:
       response = make_response(
           json.dumps('Failed to upgrade the authorization code.'), 401)
@@ -117,6 +117,11 @@ def gconnect():
   print "done!"
   return output
 
+#Disconnect - Revoke a current user's token and reset their login_session.
+#@app.route("/gdisconnect")
+#def gdisconnect():
+  #only disconnect a connected user.
+#  credentials = 
 
 #JSON APIs to view Restaurant Information
 @app.route('/restaurant/<int:restaurant_id>/menu/JSON')
