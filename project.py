@@ -280,6 +280,13 @@ def deleteMenuItem(restaurant_id,menu_id):
       return redirect(url_for('showMenu', restaurant_id = restaurant_id))
   else:
       return render_template('deleteMenuItem.html', item = itemToDelete)
+      
+def getUserID(email):
+  try:
+    user = session.query(User).filter_by(email = login_session['email'])
+    return user.id
+  except: 
+    return None
 
 def getUserInfo(user_id):
   user = session.query(User).filter_by(id = user_id).one()
