@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect,jsonify, url_for, flash
 from sqlalchemy import create_engine, asc
 from sqlalchemy.orm import sessionmaker
-from database_setup import Base, Restaurant, MenuItem
+from database_setup import Base, Restaurant, MenuItem, User
 from flask import session as login_session
 import random, string
 from oauth2client.client import flow_from_clientsecrets
@@ -281,8 +281,14 @@ def deleteMenuItem(restaurant_id,menu_id):
   else:
       return render_template('deleteMenuItem.html', item = itemToDelete)
 
-
-
+def createUser(login_session):
+  newUser = User(name = login_session['username'], 
+    email = login_session['email'], 
+    picture = login_session['picture'])
+  session.add(newUser)
+  session.commit()
+  user = session.query(User).filter_by(email = login_session['email']).one()
+  return user.id
 
 if __name__ == '__main__':
   app.secret_key = 'super_secret_key'
