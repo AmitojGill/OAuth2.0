@@ -33,8 +33,8 @@ def showLogin():
 	login_session['state'] = state
 	#return "The current session state is %s" % login_session['state']
 	return render_template('login.html', STATE=state)
+	
 # Facebook connect 
-
 @app.route('/fbconnect', methods=['POST'])
 def fbconnect():
     if request.args.get('state') != login_session['state']:
@@ -69,8 +69,10 @@ def fbconnect():
     url = 'https://graph.facebook.com/v2.8/me?access_token=%s&fields=name,id,email' % token
     h = httplib2.Http()
     result = h.request(url, 'GET')[1]
-    # print "url sent for API access:%s"% url
-    # print "API JSON result: %s" % result
+
+    #print "url sent for API access:%s"% url
+    #print "API JSON result: %s" % result
+    
     data = json.loads(result)
     login_session['provider'] = 'facebook'
     login_session['username'] = data["name"]
@@ -81,7 +83,7 @@ def fbconnect():
     login_session['access_token'] = token
 
     # Get user picture
-    url = 'https://graph.facebook.com/v2.8/me?access_token=%s&fields=name,id,email' % token
+    url = 'https://graph.facebook.com/v2.8/me/picture?access_token=%s&redirect=0&height=200&width=200' % token
     h = httplib2.Http()
     result = h.request(url, 'GET')[1]
     data = json.loads(result)
@@ -105,6 +107,7 @@ def fbconnect():
 
     flash("Now logged in as %s" % login_session['username'])
     return output
+
 
 @app.route('/fbdisconnect')
 def fbdisconnect():
